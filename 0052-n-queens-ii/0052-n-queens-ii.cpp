@@ -3,31 +3,31 @@ public:
     int count=0;
     bool ispossible(int row,int col,vector<vector<int>>board,int n){
         
-    int duprow = row;
-      int dupcol = col;
+    int r=row;
+      int c= col;
 
-      while (row >= 0 && col >= 0) {
-        if (board[row][col] == 1)
+      while (r >= 0 && c >= 0) {
+        if (board[r][c] == 1)
           return false;
-        row--;
-        col--;
+        r--;
+        c--;
       }
 
-      col = dupcol;
-      row = duprow;
-      while (col >= 0) {
-        if (board[row][col] == 1)
+      int c1 = col;
+      int r1 = row;
+      while (c1 >= 0) {
+        if (board[r1][c1] == 1)
           return false;
-        col--;
+        c1--;
       }
 
-      row = duprow;
-      col = dupcol;
-      while (row < n && col >= 0) {
-        if (board[row][col] == 1)
+      int ro = row;
+      int co = col;
+      while (ro < n && co >= 0) {
+        if (board[ro][co] == 1)
           return false;
-        row++;
-        col--;
+        ro++;
+        co--;
       }
       return true;
     }
