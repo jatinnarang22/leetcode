@@ -10,7 +10,13 @@ class Solution {
             if(m.containsKey(t)){
               ans+=m.get(t); 
             }
-            m.put(val,m.getOrDefault(val,0)+1);
+             if(m.containsKey(val)){
+                int g=m.get(val);
+                 // System.out.print(g);
+            m.put(val,g+1);
+            }
+            else m.put(val,1);
+            // System.out.print(val);
         }
         return ans;
     }
