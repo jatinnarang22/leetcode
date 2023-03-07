@@ -1,6 +1,5 @@
 class Solution {
     public long minimumTime(int[] time, int totalTrips) {
-        Arrays.sort(time);
         long l=0;
         long u=100000000000000L;
         long ans=u;
