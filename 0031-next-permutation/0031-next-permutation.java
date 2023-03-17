@@ -1,54 +1,43 @@
 class Solution {
-    public void nextPermutation(int[] nums) {
-        
-        int n=nums.length;
-        int i=n-1,flag=0;
-        for(;i>0;i--){
-            if(nums[i]>nums[i-1]){
-                sol(i-1,nums,n);
-                    flag=1;
-                break;
-            }
-        }
-        if(flag==0){
-           reverse(nums,0,n-1);
-        }
+ 
+     public static void reverse(int[] nums, int l, int r){
+           
+      //      System.out.print(nums[r]);
+      //      int min=nums[l+1]-nums[l];
+           int flag=0;
+           for(int i=l+1;i<=r;i++){
+                 if(nums[l]>=nums[i]){
+                     System.out.print(l+" "+i);
+                       flag=1;
+                       swap(nums,l,i-1);
+                     break;
+                 }
+           }
+           if(flag==0){
+                 swap(nums,l,r);
+           }
+      //      System.out.print(l+1+" "+nums[r]);
+           Arrays.sort(nums,l+1,r+1);
     }
-    public void sol(int k,int[] nums,int n){
-        int i = k+1;
-        while(i < n && nums[i] > nums[k]) i++;
-        swap(nums, i-1, k);
-        reverse(nums, k+1, n-1);
-//         //now check closest no
-//         int mi=nums[k+1]-nums[k];
-//         // System.out.print(nums[k]);
-//         int pos=k+1;
-//         for(int i=k+1;i<n;i++){
-//             int h=nums[i]-nums[k];
-//              // System.out.print(nums[k]);
-//             // if(h<0)h=-h;
-                
-//             if(mi>h && h != 0){
-//                 mi=h;
-//                 pos=i;
-                 
-//             }
-//         }
-//        System.out.print(pos);
-//         swap(nums,pos,k);
-//         reverse(nums,k+1,n-1);
+    public static void swap(int [] nums,int l,int r){
+      //     System.out.print(l+" "+r);
+          int temp=nums[l];
+          nums[l]=nums[r];
+          nums[r]=temp;
     }
-    public void reverse(int[] nums,int k,int n){
-      while(k<n){
-          swap(nums,k,n);
-          k++;
-          n--;
-      }  
+    public static void nextPermutation(int[] nums) {
+          int n=nums.length;
+      //     System.out.print(n);
+      int flag=0;
+          for(int i=n-1;i>0;i--){
+                if(nums[i]>nums[i-1]){
+                      flag=1;
+                      reverse(nums,i-1,n-1);
+                      break;
+                }
+          }
+          if(flag==0)Arrays.sort(nums);
     }
-    public void swap(int[]nums,int pos,int k){
-        int temp=nums[k];
-        nums[k]=nums[pos];
-        nums[pos]=temp;
-    }
+
     
 }
