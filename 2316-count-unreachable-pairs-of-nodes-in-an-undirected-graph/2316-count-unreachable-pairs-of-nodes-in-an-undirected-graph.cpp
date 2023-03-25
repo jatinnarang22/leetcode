@@ -1,40 +1,34 @@
 class Solution {
 public:
-    long long bfs(int i,vector<vector<int>>&adj,int n,vector<int>&vis){
-        queue<int>q;
-        q.push(i);
-        long long val=1;
-         vis[i] = 1;
-        while(!q.empty()){
-            int temp=q.front();
-            q.pop();
-            for(auto ad : adj[temp]){
-                if(vis[ad]!=1){
-                    vis[ad]=1;
-                    val++;
-                    q.push(ad);
-                }
+    int dfs(int node, vector<vector<int>>& adj, vector<bool>& visit) {
+        int count = 1;
+        visit[node] = true;
+        for (int neighbor : adj[node]) {
+            if (!visit[neighbor]) {
+                count += dfs(neighbor, adj, visit);
             }
         }
-        return val;
+        return count;
     }
+
     long long countPairs(int n, vector<vector<int>>& edges) {
-        vector<vector<int>>adj(n);
-        for(auto it: edges){
-            adj[it[0]].push_back(it[1]);
-            adj[it[1]].push_back(it[0]);
+        vector<vector<int>> adj(n);
+        for (auto edge : edges) {
+            adj[edge[0]].push_back(edge[1]);
+            adj[edge[1]].push_back(edge[0]);
         }
-        
-         vector<int>vis(n,0);
-        long long cnt=0;
-        long long rem=n;
-        for(int i=0;i<n;i++){
-            if(!vis[i]){
-               int size = bfs(i,adj,n,vis);
-            cnt+= size*(rem-size);
-            rem-=size;
+
+        long long numberOfPairs = 0;
+        long long sizeOfComponent = 0;
+        long long remainingNodes = n;
+        vector<bool> visit(n);
+        for (int i = 0; i < n; i++) {
+            if (!visit[i]) {
+                sizeOfComponent = dfs(i, adj, visit);
+                numberOfPairs += sizeOfComponent * (remainingNodes - sizeOfComponent);
+                remainingNodes -= sizeOfComponent;
             }
         }
-        return cnt;
+        return numberOfPairs;
     }
 };
