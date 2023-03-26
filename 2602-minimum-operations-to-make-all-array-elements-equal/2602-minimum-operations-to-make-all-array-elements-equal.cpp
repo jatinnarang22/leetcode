@@ -15,7 +15,7 @@ public:
         for(auto q : queries){
             long long  l=lower_bound(nums.begin(),nums.end(),q)-nums.begin()-1;
             long long u=upper_bound(nums.begin(),nums.end(),q)-nums.begin();
-            long long val=q*l-(pre[l]- pre[0]);
+            long long val=q*l-(pre[l]);
             // cout<<val;
             if(u!=n){
                 val+=(pre[n-1]-pre[u-1])-q*(n-u);
