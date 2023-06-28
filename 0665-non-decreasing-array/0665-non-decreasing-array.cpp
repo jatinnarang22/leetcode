@@ -1,25 +1,20 @@
 class Solution {
 public:
     bool checkPossibility(vector<int>& nums) {
-        int flag=1;
-        if(nums.size()==1)return true;
-        for(int i=1;i<nums.size();i++){
-            if( nums[i]<nums[i-1]){
-                if(i==1 || nums[i-2]<=nums[i]){
-                    nums[i-1]=nums[i];
+       int count = 1;
+        int min_value = INT_MIN;
+        for(int i = 0; i < nums.size()-1; i++){
+            if(nums[i] <= nums[i + 1]){
+                min_value = nums[i];
+            }else{
+                if(nums[i + 1] < min_value){
+                    nums[i+1] = nums[i];
                 }
-                else nums[i]=nums[i-1];
-                break;
+                count -= 1;
             }
         }
-        for(int i=1;i<nums.size();i++){
-            
-            cout<<nums[i];
-            if(nums[i]<nums[i-1]){
-                cout<<nums[i];
-                return false;
-            }
-        }
-        return true;
+        if(count < 0)
+            return false;
+            return true;
     }
 };
