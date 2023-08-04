@@ -1,17 +1,26 @@
 class Solution {
 public:
-   bool rec(vector<int>&arr,int ind,vector<int>&dp){
-        if(ind==arr.size()-1)return true;
-        if(arr[ind]==0)return 0;
-        if(dp[ind]!=-1)return dp[ind];
-        for(int i=1;i<=arr[ind];i++){ 
-            if(i<arr.size() and rec(arr,i+ind,dp))
-           return dp[ind]=true;
+    bool fun(vector<int>& nums, int n, int i, vector<int>& dp) {
+        if (i == n - 1) {
+            return true;
         }
-        return dp[ind]=false;
+        if (dp[i] != -1) {
+            return dp[i];
+        }
+        if (nums[i] == 0 || i >= n) {
+            return false;
+        }
+        for (int j = 1; i + j < n && j <= nums[i]; j++) {
+            if (fun(nums, n, i + j, dp)) {
+                return dp[i] = true;
+            }
+        }
+        return dp[i] = false;
     }
- bool canJump(vector<int>& arr) {
-        vector<int>dp(arr.size(),-1);
-        return rec(arr,0,dp);
+    
+    bool canJump(vector<int>& nums) {
+        int n = nums.size();
+        vector<int> dp(n, -1);
+        return fun(nums, n, 0, dp);
     }
 };
