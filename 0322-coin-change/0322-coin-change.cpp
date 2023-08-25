@@ -21,12 +21,36 @@ public:
         
     }
     int coinChange(vector<int>& coins, int amount) {
-        vector<vector<long>> dp(amount+1,vector<long>(coins.size()+1,-1));
-        int val =  f(coins.size()-1,coins,amount,dp);
+        // vector<vector<long>> dp(amount+1,vector<long>(coins.size()+1,-1));
+        // int val =  f(coins.size()-1,coins,amount,dp);
+        // if(val == 1e9) return -1;
         
-        if(val == 1e9) return -1;
+        // ---------tabulation case--------
+        vector < vector < int > >  dp(coins.size(),vector<int>(amount+1,0));
         
-        return val;
+        for(int t=1;t<=amount;t++){
+            dp[0][t]=(t % coins[0] == 0)? (t / coins[0]) : -1;
+        }
+        
+        // for(int t=1;t<=amount;t++)cout<<dp[0][t];
+        
+        int n=coins.size();
+        for(int i=1;i<n;i++){
+            for(int j=1;j<=amount;j++){
+                int res = INT_MAX;
+                int nonpick=dp[i-1][j];
+                if(nonpick != -1) res = min(res, nonpick);
+                if(coins[i] <= j){
+                    int pick = dp[i][j-coins[i]];
+                    if(pick != -1) res = min(res, pick+1);
+                }
+                if(res == INT_MAX) dp[i][j] = -1;
+                else dp[i][j]= res;
+            }
+        }
+        
+        
+        return dp[n-1][amount];
     }
 };
 
